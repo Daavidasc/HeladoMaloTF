@@ -1,0 +1,91 @@
+import cv2
+import numpy as np
+import mss
+import threading
+import time
+
+# === Parámetros ===
+ANCHO_CELDA = 57
+ALTO_CELDA = 57
+FILAS = 12
+COLUMNAS = 15
+MONITOR = {"top": 100, "left": 100, "width": 855, "height": 684}
+SCALE = 1  # puedes bajar a 0.5 si quieres escalar
+
+# === Templates y umbrales ===
+plantillas = {
+    1: [cv2.imread("hielo1.png"), cv2.imread("hielo2.png"), cv2.imread("hielo3.png")],
+    2: [cv2.imread("heladoFront.png")],
+    3: [cv2.imread("fruta1.png"), cv2.imread("fruta2.png"), cv2.imread("fruta3.png")]
+}
+
+umbrales = {
+    1: [0.75, 0.78, 0.8],
+    2: [0.82],
+    3: [0.72, 0.73, 0.76]
+}
+
+# === Variables compartidas ===
+frame_actual = None
+lock = threading.Lock()
+salir = False
+
+# === Hilo de captura ===
+def capturar_pantalla():
+    global frame_actual, salir
+    with mss.mss() as sct:
+        while not salir:
+            frame = np.array(sct.grab(MONITOR))[:, :, :3]
+            with lock:
+                frame_actual = frame
+            time.sleep(0.01)  # ≈ 100 FPS max
+
+# === Hilo principal: procesamiento y visualización ===
+def procesar_y_mostrar():
+    global salir, frame_actual
+
+    while not salir:
+        with lock:
+            if frame_actual is None:
+                continue
+            captura = frame_actual.copy()
+
+        matriz = np.zeros((FILAS, COLUMNAS), dtype=np.uint8)
+
+        for valor, lista_templates in plantillas.items():
+            lista_umbrales = umbrales.get(valor, [0.7] * len(lista_templates))
+            for template, umbral in zip(lista_templates, lista_umbrales):
+                if template is None:
+                    continue
+
+                h, w = template.shape[:2]
+                resultado = cv2.matchTemplate(captura, template, cv2.TM_CCOEFF_NORMED)
+                loc = np.where(resultado >= umbral)
+
+                for pt in zip(*loc[::-1]):
+                    centro_x = pt[0] + w // 2
+                    centro_y = pt[1] + h // 2
+                    col = centro_x // ANCHO_CELDA
+                    fila = centro_y // ALTO_CELDA
+
+                    if 0 <= fila < FILAS and 0 <= col < COLUMNAS:
+                        matriz[fila, col] = valor
+                        color = (0, 255, 0) if valor == 1 else (255, 0, 0) if valor == 2 else (0, 0, 255)
+                        cv2.rectangle(captura, pt, (pt[0]+w, pt[1]+h), color, 2)
+                        texto = f"({fila},{col})"
+                        cv2.putText(captura, texto, (pt[0], pt[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1)
+
+        cv2.imshow("Juego Detectado", captura)
+        if cv2.waitKey(1) & 0xFF == 27:  # ESC
+            salir = True
+            break
+
+    cv2.destroyAllWindows()
+
+# === Lanzar hilos ===
+hilo_captura = threading.Thread(target=capturar_pantalla)
+hilo_captura.start()
+
+procesar_y_mostrar()
+
+hilo_captura.join()
