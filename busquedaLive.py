@@ -15,14 +15,16 @@ SCALE = 1  # puedes bajar a 0.5 si quieres escalar
 # === Templates y umbrales ===
 plantillas = {
     1: [cv2.imread("hielo1.png"), cv2.imread("hielo2.png"), cv2.imread("hielo3.png")],
-    2: [cv2.imread("heladoFront.png"), cv2.imread("heladoRight.png"), cv2.imread("heladoBack.png") ],
-    3: [cv2.imread("fruta1.png"), cv2.imread("fruta2.png"), cv2.imread("fruta3.png")]
+    2: [cv2.imread("heladoFront.png"), cv2.imread("heladoLeft.png"),cv2.imread("heladoRight.png"), cv2.imread("heladoBack.png")],
+    3: [cv2.imread("fruta1.png"), cv2.imread("fruta2.png"), cv2.imread("fruta3.png")],
+    4: [cv2.imread("maloFront1.png"), cv2.imread("maloFront2.png"), cv2.imread("maloFront3.png"),cv2.imread("maloBack1.png"), cv2.imread("maloBack2.png"), cv2.imread("maloBack2.png") ]
 }
 
 umbrales = {
     1: [0.75, 0.78, 0.8],
-    2: [0.82, 0.65, 0.65],
-    3: [0.72, 0.73, 0.76]
+    2: [0.82, 0.65, 0.65, 0.65],
+    3: [0.78, 0.73, 0.76],
+    4: [0.4, 0.4, 0.4,0.4, 0.4, 0.4]
 }
 
 # === Variables compartidas ===
