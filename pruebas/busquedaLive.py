@@ -15,10 +15,10 @@ SCALE = 1
 # === Templates y umbrales ===
 plantillas = {
     1: [cv2.imread("hielo1.png"), cv2.imread("hielo2.png"), cv2.imread("hielo3.png")],
-    2: [cv2.imread("heladoFront.png"), cv2.imread("heladoLeft.png"), cv2.imread("heladoRight.png"), cv2.imread("heladoBack.png")],
-    3: [cv2.imread("fruta1.png"), cv2.imread("fruta2.png"), cv2.imread("fruta3.png")],
-    4: [cv2.imread("maloFront1.png"), cv2.imread("maloFront2.png"), cv2.imread("maloFront3.png"),
-        cv2.imread("maloBack1.png"), cv2.imread("maloBack2.png"), cv2.imread("maloBack2.png")]
+
+    2: [cv2.imread("heladoFront.png"), cv2.imread("heladoLeft.png"),cv2.imread("heladoRight.png"), cv2.imread("heladoBack.png")],
+    3: [cv2.imread("fruta1.png"), cv2.imread("fruta2.png"), cv2.imread("fruta3.png"), cv2.imread("fruta4.png"), cv2.imread("fruta52.png"), cv2.imread("fruta6.png")],
+    4: [cv2.imread("maloFront1.png"), cv2.imread("maloFront2.png"), cv2.imread("maloFront3.png"),cv2.imread("maloBack1.png"), cv2.imread("maloBack2.png"), cv2.imread("maloBack2.png") ]
 }
 
 umbrales = {
