@@ -5,4 +5,7 @@ __pycache__/
 *.pyo
 .vscode/
 .idea/
-
+template/
+debug/
+training_data.csv
+.DS_Store
