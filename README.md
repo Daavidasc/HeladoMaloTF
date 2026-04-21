@@ -2,7 +2,7 @@
 
 ## Autonomous Agent for 'Bad Ice-Cream' via Reinforcement Learning.
 
-##HeladoMaloTF es un sistema avanzado de automatización de juegos que combina técnicas de visión artificial y aprendizaje por refuerzo. El proyecto captura el estado actual del juego Bad Ice-Cream, lo transforma en una representación matricial estructurada y utiliza un modelo de inteligencia artificial (basado en TensorFlow) para tomar decisiones autónomas y jugar el nivel de forma óptima.
+HeladoMaloTF es un sistema avanzado de automatización de juegos que combina técnicas de visión artificial y aprendizaje por refuerzo. El proyecto captura el estado actual del juego Bad Ice-Cream, lo transforma en una representación matricial estructurada y utiliza un modelo de inteligencia artificial (basado en TensorFlow) para tomar decisiones autónomas y jugar el nivel de forma óptima.
 ##Pipeline del Proyecto
 
 ## El sistema opera bajo un flujo de trabajo de ciclo cerrado:
